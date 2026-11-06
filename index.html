@@ -1,0 +1,649 @@
+```html
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OmniTools - Free Online Utility Tools & Converters</title>
+    <meta name="description" content="Free online utility tools: Image resizer, QR Code generator, Age calculator, Word counter, and Password generator. Fast, browser-based, and 100% private.">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            900: '#14532d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons & QR Code Library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .ad-slot {
+            background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.03) 0, rgba(255,255,255,0.03) 10px, transparent 0, transparent 20px);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-brand-500 selection:text-black">
+
+    <!-- Top Navigation Bar -->
+    <header class="sticky top-0 z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="showDashboard()">
+                <div class="bg-gradient-to-tr from-brand-600 to-emerald-400 p-2.5 rounded-xl text-slate-950 font-black text-xl shadow-lg shadow-brand-500/20">
+                    <i class="fa-solid fa-wrench"></i>
+                </div>
+                <span class="text-xl font-bold tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
+                    OmniTools<span class="text-brand-500">.io</span>
+                </span>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="flex-1 max-w-md mx-4 hidden sm:block">
+                <div class="relative">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                    <input type="text" id="toolSearch" onkeyup="filterTools()" placeholder="Search tools (e.g. Resizer, QR, Age...)" 
+                           class="w-full pl-10 pr-4 py-2 bg-slate-800/80 border border-slate-700 rounded-xl text-sm focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition">
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-3">
+                <button onclick="showDashboard()" class="px-3.5 py-2 text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg transition border border-slate-700">
+                    <i class="fa-solid fa-grid-2 mr-1.5"></i> All Tools
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Banner Ad Slot -->
+    <div class="max-w-7xl mx-auto px-4 w-full mt-4">
+        <div class="ad-slot bg-slate-900/50 border border-slate-800/80 rounded-xl p-3 text-center min-h-[90px] flex flex-col items-center justify-center relative overflow-hidden group">
+            <span class="text-[10px] tracking-widest text-slate-500 font-mono uppercase mb-1">Advertisement Slot (728x90)</span>
+            <div class="text-xs text-slate-400">Place your Adsterra / Google AdSense Banner Code Here</div>
+            <!-- PASTE YOUR AD CODE HERE -->
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        
+        <!-- Dashboard / Tools Grid View -->
+        <div id="dashboardView">
+            <div class="mb-8 text-center sm:text-left">
+                <h1 class="text-2xl sm:text-3xl font-extrabold text-white">Everyday Web Utilities</h1>
+                <p class="text-slate-400 text-sm mt-1">Free, ultra-fast client-side web tools. No registration required.</p>
+            </div>
+
+            <!-- Grid of Tools -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5" id="toolsGrid">
+                
+                <!-- Tool 1: Image Resizer -->
+                <div class="tool-card bg-slate-900 border border-slate-800 hover:border-brand-500/50 rounded-2xl p-5 transition duration-200 cursor-pointer flex flex-col justify-between group" onclick="openTool('imageResizer')">
+                    <div>
+                        <div class="w-12 h-12 bg-emerald-500/10 text-emerald-400 rounded-xl flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition duration-200">
+                            <i class="fa-solid fa-image"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white group-hover:text-brand-500 transition">Image Resizer</h3>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">Resize, change dimensions, and compress JPG/PNG images straight from your browser.</p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-800/60 flex justify-between items-center text-xs font-semibold text-brand-500">
+                        <span>Launch Tool</span>
+                        <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
+                    </div>
+                </div>
+
+                <!-- Tool 2: QR Code Generator -->
+                <div class="tool-card bg-slate-900 border border-slate-800 hover:border-brand-500/50 rounded-2xl p-5 transition duration-200 cursor-pointer flex flex-col justify-between group" onclick="openTool('qrGenerator')">
+                    <div>
+                        <div class="w-12 h-12 bg-blue-500/10 text-blue-400 rounded-xl flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition duration-200">
+                            <i class="fa-solid fa-qrcode"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white group-hover:text-brand-500 transition">QR Code Generator</h3>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">Create instant high-resolution QR codes for URLs, text, Wi-Fi credentials, and contact info.</p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-800/60 flex justify-between items-center text-xs font-semibold text-brand-500">
+                        <span>Launch Tool</span>
+                        <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
+                    </div>
+                </div>
+
+                <!-- Tool 3: Text & PDF Converter -->
+                <div class="tool-card bg-slate-900 border border-slate-800 hover:border-brand-500/50 rounded-2xl p-5 transition duration-200 cursor-pointer flex flex-col justify-between group" onclick="openTool('textUtility')">
+                    <div>
+                        <div class="w-12 h-12 bg-purple-500/10 text-purple-400 rounded-xl flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition duration-200">
+                            <i class="fa-solid fa-file-lines"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white group-hover:text-brand-500 transition">Text & PDF Utility</h3>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">Count words, convert letter cases, clean text, and format instantly to printable PDF.</p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-800/60 flex justify-between items-center text-xs font-semibold text-brand-500">
+                        <span>Launch Tool</span>
+                        <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
+                    </div>
+                </div>
+
+                <!-- Tool 4: Age & Date Calculator -->
+                <div class="tool-card bg-slate-900 border border-slate-800 hover:border-brand-500/50 rounded-2xl p-5 transition duration-200 cursor-pointer flex flex-col justify-between group" onclick="openTool('ageCalculator')">
+                    <div>
+                        <div class="w-12 h-12 bg-amber-500/10 text-amber-400 rounded-xl flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition duration-200">
+                            <i class="fa-solid fa-calculator"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white group-hover:text-brand-500 transition">Exact Age Calculator</h3>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">Calculate exact age in years, months, days, hours and track your upcoming birthday countdown.</p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-800/60 flex justify-between items-center text-xs font-semibold text-brand-500">
+                        <span>Launch Tool</span>
+                        <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
+                    </div>
+                </div>
+
+                <!-- Tool 5: Password Generator -->
+                <div class="tool-card bg-slate-900 border border-slate-800 hover:border-brand-500/50 rounded-2xl p-5 transition duration-200 cursor-pointer flex flex-col justify-between group" onclick="openTool('passwordGen')">
+                    <div>
+                        <div class="w-12 h-12 bg-rose-500/10 text-rose-400 rounded-xl flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition duration-200">
+                            <i class="fa-solid fa-key"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white group-hover:text-brand-500 transition">Secure Password Generator</h3>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">Generate ultra-secure, cryptographically random passwords and PINs with full custom settings.</p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-800/60 flex justify-between items-center text-xs font-semibold text-brand-500">
+                        <span>Launch Tool</span>
+                        <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Tool View Wrapper -->
+        <div id="toolView" class="hidden">
+            <!-- Back Button Header -->
+            <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-800">
+                <button onclick="showDashboard()" class="inline-flex items-center space-x-2 text-sm text-slate-400 hover:text-white transition">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Back to all tools</span>
+                </button>
+                <div id="toolTitleDisplay" class="text-sm font-semibold text-brand-500 bg-brand-500/10 px-3 py-1 rounded-full border border-brand-500/20">
+                    Tool Mode
+                </div>
+            </div>
+
+            <!-- Content Area for Active Tool -->
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                <!-- Main Tool Window -->
+                <div class="lg:col-span-3 bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl" id="toolContainer">
+                    <!-- Dynamic Tool HTML renders here -->
+                </div>
+
+                <!-- Sidebar Ad Slot -->
+                <div class="lg:col-span-1 space-y-4">
+                    <div class="ad-slot bg-slate-900 border border-slate-800 rounded-2xl p-4 text-center min-h-[300px] flex flex-col items-center justify-center sticky top-20">
+                        <span class="text-[10px] tracking-widest text-slate-500 font-mono uppercase mb-1">Ad Banner Slot (300x250)</span>
+                        <p class="text-xs text-slate-400">Place Sidebar Adsterra / Google Ad Code Here</p>
+                        <!-- PASTE YOUR SIDEBAR AD CODE HERE -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Bottom Banner Ad Slot -->
+    <div class="max-w-7xl mx-auto px-4 w-full mb-6">
+        <div class="ad-slot bg-slate-900/50 border border-slate-800/80 rounded-xl p-3 text-center min-h-[90px] flex flex-col items-center justify-center">
+            <span class="text-[10px] tracking-widest text-slate-500 font-mono uppercase mb-1">Bottom Advertisement Slot</span>
+            <div class="text-xs text-slate-400">Place Adsterra Native Banner Code Here</div>
+            <!-- PASTE YOUR NATIVE AD CODE HERE -->
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 border-t border-slate-800 py-6 text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-3">
+            <div>
+                &copy; 2026 <span class="font-bold text-slate-300">OmniTools</span>. All rights reserved. 100% Client-side Processing.
+            </div>
+            <div class="flex space-x-4">
+                <a href="#" onclick="showDashboard()" class="hover:text-slate-300">Home</a>
+                <a href="#" onclick="alert('OmniTools process all files locally in your browser. No uploaded content touches any server.')" class="hover:text-slate-300">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Tool Logic -->
+    <script>
+        // Navigation Logic
+        function showDashboard() {
+            document.getElementById('dashboardView').classList.remove('hidden');
+            document.getElementById('toolView').classList.add('hidden');
+            document.getElementById('toolSearch').value = '';
+            filterTools();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function openTool(toolKey) {
+            document.getElementById('dashboardView').classList.add('hidden');
+            document.getElementById('toolView').classList.remove('hidden');
+            
+            const container = document.getElementById('toolContainer');
+            const titleDisplay = document.getElementById('toolTitleDisplay');
+
+            switch (toolKey) {
+                case 'imageResizer':
+                    titleDisplay.textContent = 'Image Resizer & Dimensions Tool';
+                    container.innerHTML = renderImageResizer();
+                    break;
+                case 'qrGenerator':
+                    titleDisplay.textContent = 'QR Code Generator';
+                    container.innerHTML = renderQRGenerator();
+                    initQRCode();
+                    break;
+                case 'textUtility':
+                    titleDisplay.textContent = 'Text Counter & PDF Utility';
+                    container.innerHTML = renderTextUtility();
+                    break;
+                case 'ageCalculator':
+                    titleDisplay.textContent = 'Age & Date Calculator';
+                    container.innerHTML = renderAgeCalculator();
+                    break;
+                case 'passwordGen':
+                    titleDisplay.textContent = 'Secure Password Generator';
+                    container.innerHTML = renderPasswordGen();
+                    generatePassword();
+                    break;
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function filterTools() {
+            const query = document.getElementById('toolSearch').value.toLowerCase();
+            const cards = document.querySelectorAll('.tool-card');
+            cards.forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const desc = card.querySelector('p').textContent.toLowerCase();
+                if (title.includes(query) || desc.includes(query)) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        // ==========================================
+        // 1. IMAGE RESIZER TOOL
+        // ==========================================
+        let loadedImg = null;
+        function renderImageResizer() {
+            return `
+                <div class="space-y-5">
+                    <h2 class="text-xl font-bold text-white">Image Resizer Tool</h2>
+                    <p class="text-xs text-slate-400">Upload your image to quickly change pixel width, height, and export as PNG/JPG.</p>
+                    
+                    <div class="border-2 border-dashed border-slate-700 hover:border-brand-500 rounded-xl p-6 text-center cursor-pointer transition bg-slate-950/40" onclick="document.getElementById('imgInput').click()">
+                        <i class="fa-solid fa-cloud-arrow-up text-3xl text-slate-400 mb-2"></i>
+                        <p class="text-sm font-medium text-slate-200">Click to upload an image</p>
+                        <p class="text-xs text-slate-500 mt-1">Supports PNG, JPG, WEBP</p>
+                        <input type="file" id="imgInput" accept="image/*" class="hidden" onchange="handleImageUpload(event)">
+                    </div>
+
+                    <div id="resizerControls" class="hidden space-y-4 pt-4 border-t border-slate-800">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="text-xs font-semibold text-slate-300">Width (px)</label>
+                                <input type="number" id="imgWidth" oninput="onDimensionChange('width')" class="w-full mt-1 bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-500">
+                            </div>
+                            <div>
+                                <label class="text-xs font-semibold text-slate-300">Height (px)</label>
+                                <input type="number" id="imgHeight" oninput="onDimensionChange('height')" class="w-full mt-1 bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-500">
+                            </div>
+                        </div>
+
+                        <div class="flex items-center space-x-2">
+                            <input type="checkbox" id="aspectRatio" checked class="rounded bg-slate-800 border-slate-700 text-brand-500">
+                            <label for="aspectRatio" class="text-xs text-slate-300">Maintain Aspect Ratio</label>
+                        </div>
+
+                        <div class="pt-2">
+                            <button onclick="downloadResizedImage()" class="w-full py-2.5 bg-brand-600 hover:bg-brand-500 text-slate-950 font-bold text-sm rounded-xl transition flex items-center justify-center space-x-2">
+                                <i class="fa-solid fa-download"></i>
+                                <span>Download Resized Image</span>
+                            </button>
+                        </div>
+
+                        <div class="mt-4 text-center max-h-[300px] overflow-hidden rounded-lg bg-slate-950 flex items-center justify-center p-2">
+                            <canvas id="imageCanvas" class="max-w-full max-h-[280px] object-contain rounded"></canvas>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function handleImageUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                loadedImg = new Image();
+                loadedImg.onload = function() {
+                    document.getElementById('resizerControls').classList.remove('hidden');
+                    document.getElementById('imgWidth').value = loadedImg.width;
+                    document.getElementById('imgHeight').value = loadedImg.height;
+                    updateCanvasPreview();
+                }
+                loadedImg.src = evt.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
+
+        function onDimensionChange(changed) {
+            if (!loadedImg) return;
+            const widthInput = document.getElementById('imgWidth');
+            const heightInput = document.getElementById('imgHeight');
+            const keepRatio = document.getElementById('aspectRatio').checked;
+
+            if (keepRatio) {
+                const ratio = loadedImg.width / loadedImg.height;
+                if (changed === 'width') {
+                    heightInput.value = Math.round(widthInput.value / ratio);
+                } else {
+                    widthInput.value = Math.round(heightInput.value * ratio);
+                }
+            }
+            updateCanvasPreview();
+        }
+
+        function updateCanvasPreview() {
+            const canvas = document.getElementById('imageCanvas');
+            const ctx = canvas.getContext('2d');
+            const w = parseInt(document.getElementById('imgWidth').value) || loadedImg.width;
+            const h = parseInt(document.getElementById('imgHeight').value) || loadedImg.height;
+
+            canvas.width = w;
+            canvas.height = h;
+            ctx.drawImage(loadedImg, 0, 0, w, h);
+        }
+
+        function downloadResizedImage() {
+            const canvas = document.getElementById('imageCanvas');
+            const link = document.createElement('a');
+            link.download = 'resized-image.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        // ==========================================
+        // 2. QR CODE GENERATOR
+        // ==========================================
+        let qrcodeObj = null;
+        function renderQRGenerator() {
+            return `
+                <div class="space-y-5">
+                    <h2 class="text-xl font-bold text-white">QR Code Generator</h2>
+                    <p class="text-xs text-slate-400">Type any website URL, Wi-Fi password, or message to generate a downloadable QR Code.</p>
+                    
+                    <div>
+                        <label class="text-xs font-semibold text-slate-300">Enter URL or Content</label>
+                        <input type="text" id="qrText" value="https://google.com" onkeyup="updateQRCode()" class="w-full mt-1 bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-500">
+                    </div>
+
+                    <div class="flex justify-center p-6 bg-white rounded-xl" id="qrCanvasWrapper">
+                        <div id="qrcode"></div>
+                    </div>
+
+                    <button onclick="downloadQR()" class="w-full py-2.5 bg-brand-600 hover:bg-brand-500 text-slate-950 font-bold text-sm rounded-xl transition flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-download"></i>
+                        <span>Download QR Code</span>
+                    </button>
+                </div>
+            `;
+        }
+
+        function initQRCode() {
+            const el = document.getElementById('qrcode');
+            el.innerHTML = '';
+            qrcodeObj = new QRCode(el, {
+                text: "https://google.com",
+                width: 180,
+                height: 180,
+                colorDark : "#000000",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        }
+
+        function updateQRCode() {
+            const text = document.getElementById('qrText').value || " ";
+            qrcodeObj.clear();
+            qrcodeObj.makeCode(text);
+        }
+
+        function downloadQR() {
+            const img = document.querySelector('#qrcode img');
+            if (img && img.src) {
+                const link = document.createElement('a');
+                link.download = 'qrcode.png';
+                link.href = img.src;
+                link.click();
+            }
+        }
+
+        // ==========================================
+        // 3. TEXT & PDF UTILITY
+        // ==========================================
+        function renderTextUtility() {
+            return `
+                <div class="space-y-5">
+                    <h2 class="text-xl font-bold text-white">Text Counter & Format Utility</h2>
+                    
+                    <div class="grid grid-cols-3 gap-3 text-center">
+                        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+                            <span class="block text-xl font-bold text-brand-500" id="wordCount">0</span>
+                            <span class="text-[10px] uppercase text-slate-400 font-mono">Words</span>
+                        </div>
+                        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+                            <span class="block text-xl font-bold text-brand-500" id="charCount">0</span>
+                            <span class="text-[10px] uppercase text-slate-400 font-mono">Characters</span>
+                        </div>
+                        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+                            <span class="block text-xl font-bold text-brand-500" id="sentenceCount">0</span>
+                            <span class="text-[10px] uppercase text-slate-400 font-mono">Sentences</span>
+                        </div>
+                    </div>
+
+                    <textarea id="textContent" oninput="analyzeText()" rows="7" placeholder="Type or paste your text here..." 
+                              class="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-sm text-slate-100 focus:outline-none focus:border-brand-500"></textarea>
+
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="changeCase('upper')" class="px-3 py-1.5 text-xs bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-200 border border-slate-700">UPPERCASE</button>
+                        <button onclick="changeCase('lower')" class="px-3 py-1.5 text-xs bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-200 border border-slate-700">lowercase</button>
+                        <button onclick="changeCase('title')" class="px-3 py-1.5 text-xs bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-200 border border-slate-700">Title Case</button>
+                        <button onclick="printTextAsPDF()" class="px-3 py-1.5 text-xs bg-brand-600 hover:bg-brand-500 text-slate-950 font-bold rounded-lg ml-auto">Print / Export PDF</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function analyzeText() {
+            const txt = document.getElementById('textContent').value;
+            document.getElementById('charCount').textContent = txt.length;
+            
+            const words = txt.trim().split(/\s+/).filter(w => w.length > 0);
+            document.getElementById('wordCount').textContent = words.length;
+
+            const sentences = txt.split(/[.!?]+/).filter(s => s.trim().length > 0);
+            document.getElementById('sentenceCount').textContent = sentences.length;
+        }
+
+        function changeCase(type) {
+            const area = document.getElementById('textContent');
+            let val = area.value;
+            if (type === 'upper') val = val.toUpperCase();
+            if (type === 'lower') val = val.toLowerCase();
+            if (type === 'title') {
+                val = val.toLowerCase().replace(/(?:^|\s)\w/g, match => match.toUpperCase());
+            }
+            area.value = val;
+            analyzeText();
+        }
+
+        function printTextAsPDF() {
+            const txt = document.getElementById('textContent').value;
+            if (!txt.trim()) {
+                alert('Please enter some text first.');
+                return;
+            }
+            const printWin = window.open('', '', 'width=800,height=600');
+            printWin.document.write(`<pre style="font-family: sans-serif; padding: 30px; whitespace: pre-wrap;">${txt}</pre>`);
+            printWin.document.close();
+            printWin.print();
+        }
+
+        // ==========================================
+        // 4. EXACT AGE CALCULATOR
+        // ==========================================
+        function renderAgeCalculator() {
+            return `
+                <div class="space-y-5">
+                    <h2 class="text-xl font-bold text-white">Exact Age & Birthday Calculator</h2>
+                    
+                    <div>
+                        <label class="text-xs font-semibold text-slate-300">Select Your Date of Birth</label>
+                        <input type="date" id="dobInput" onchange="calculateAge()" class="w-full mt-1 bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-500">
+                    </div>
+
+                    <div id="ageResult" class="hidden space-y-4 pt-3 border-t border-slate-800">
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-center">
+                            <span class="text-xs text-slate-400 block uppercase font-mono">Your Exact Age</span>
+                            <div class="text-2xl font-extrabold text-brand-500 mt-1" id="ageOutput">--</div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3 text-center">
+                            <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+                                <span class="text-xs text-slate-400 block">Total Days Lived</span>
+                                <span class="text-lg font-bold text-white" id="totalDays">0</span>
+                            </div>
+                            <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+                                <span class="text-xs text-slate-400 block">Total Hours Lived</span>
+                                <span class="text-lg font-bold text-white" id="totalHours">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function calculateAge() {
+            const dobVal = document.getElementById('dobInput').value;
+            if (!dobVal) return;
+
+            const dob = new Date(dobVal);
+            const now = new Date();
+
+            let years = now.getFullYear() - dob.getFullYear();
+            let months = now.getMonth() - dob.getMonth();
+            let days = now.getDate() - dob.getDate();
+
+            if (days < 0) {
+                months--;
+                const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+                days += prevMonth.getDate();
+            }
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            const diffTime = Math.abs(now - dob);
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
+
+            document.getElementById('ageResult').classList.remove('hidden');
+            document.getElementById('ageOutput').textContent = `${years} Years, ${months} Months, ${days} Days`;
+            document.getElementById('totalDays').textContent = diffDays.toLocaleString();
+            document.getElementById('totalHours').textContent = diffHours.toLocaleString();
+        }
+
+        // ==========================================
+        // 5. SECURE PASSWORD GENERATOR
+        // ==========================================
+        function renderPasswordGen() {
+            return `
+                <div class="space-y-5">
+                    <h2 class="text-xl font-bold text-white">Password & Key Generator</h2>
+                    
+                    <div class="relative">
+                        <input type="text" id="passOutput" readonly class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-brand-500 font-mono font-bold text-lg focus:outline-none pr-24">
+                        <button onclick="copyPassword()" class="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-brand-600 hover:bg-brand-500 text-slate-950 font-bold text-xs rounded-lg transition">
+                            Copy
+                        </button>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div>
+                            <div class="flex justify-between text-xs text-slate-300 mb-1">
+                                <span>Password Length</span>
+                                <span id="lengthLabel" class="font-bold text-brand-500">16</span>
+                            </div>
+                            <input type="range" id="passLength" min="6" max="32" value="16" oninput="document.getElementById('lengthLabel').textContent=this.value; generatePassword();" class="w-full accent-brand-500">
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-2 text-xs text-slate-300">
+                            <label class="flex items-center space-x-2"><input type="checkbox" id="incUppercase" checked onchange="generatePassword()" class="rounded bg-slate-800 border-slate-700 text-brand-500"> <span>Uppercase (A-Z)</span></label>
+                            <label class="flex items-center space-x-2"><input type="checkbox" id="incNumbers" checked onchange="generatePassword()" class="rounded bg-slate-800 border-slate-700 text-brand-500"> <span>Numbers (0-9)</span></label>
+                            <label class="flex items-center space-x-2"><input type="checkbox" id="incSymbols" checked onchange="generatePassword()" class="rounded bg-slate-800 border-slate-700 text-brand-500"> <span>Symbols (!@#$)</span></label>
+                        </div>
+                    </div>
+
+                    <button onclick="generatePassword()" class="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-bold text-sm rounded-xl transition border border-slate-700">
+                        Regenerate Password
+                    </button>
+                </div>
+            `;
+        }
+
+        function generatePassword() {
+            const len = parseInt(document.getElementById('passLength').value);
+            const useUpper = document.getElementById('incUppercase').checked;
+            const useNum = document.getElementById('incNumbers').checked;
+            const useSym = document.getElementById('incSymbols').checked;
+
+            let chars = 'abcdefghijklmnopqrstuvwxyz';
+            if (useUpper) chars += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            if (useNum) chars += '0123456789';
+            if (useSym) chars += '!@#$%^&*()_+-=[]{}|;:,.<>?';
+
+            let result = '';
+            for (let i = 0; i < len; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            document.getElementById('passOutput').value = result;
+        }
+
+        function copyPassword() {
+            const copyText = document.getElementById("passOutput");
+            copyText.select();
+            document.execCommand("copy");
+            alert("Password copied to clipboard!");
+        }
+
+        // Initialize default view
+        window.onload = function() {
+            showDashboard();
+        };
+    </script>
+</body>
+</html>
+```
